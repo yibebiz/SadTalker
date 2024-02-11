@@ -17,6 +17,7 @@ def main(args):
 
     pic_path = args.source_image
     audio_path = args.driven_audio
+    video_name_unique_string=args.video_unique_name
     save_dir = os.path.join(args.result_dir, strftime("%Y_%m_%d_%H.%M.%S"))
     os.makedirs(save_dir, exist_ok=True)
     pose_style = args.pose_style
@@ -87,8 +88,8 @@ def main(args):
     result = animate_from_coeff.generate(data, save_dir, pic_path, crop_info, \
                                 enhancer=args.enhancer, background_enhancer=args.background_enhancer, preprocess=args.preprocess, img_size=args.size)
     
-    shutil.move(result, save_dir+'.mp4')
-    print('The generated video is named:', save_dir+'.mp4')
+    shutil.move(result, save_dir+video_name_unique_string+'.mp4')
+    print('The generated video is named:', save_dir+video_name_unique_string+'.mp4')
 
     if not args.verbose:
         shutil.rmtree(save_dir)
@@ -98,6 +99,7 @@ if __name__ == '__main__':
 
     parser = ArgumentParser()  
     parser.add_argument("--driven_audio", default='./examples/driven_audio/bus_chinese.wav', help="path to driven audio")
+    parser.add_argument("--video_unique_name", default='./examples/driven_audio/unique_video_result_name', help="Unique video name")
     parser.add_argument("--source_image", default='./examples/source_image/full_body_1.png', help="path to source image")
     parser.add_argument("--ref_eyeblink", default=None, help="path to reference video providing eye blinking")
     parser.add_argument("--ref_pose", default=None, help="path to reference video providing pose")
