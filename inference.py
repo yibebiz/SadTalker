@@ -14,7 +14,7 @@ from src.utils.init_path import init_path
 
 def main(args):
     #torch.backends.cudnn.enabled = False
-
+    video_unique_name_str = args.video_unique_name
     pic_path = args.source_image
     audio_path = args.driven_audio
     save_dir = os.path.join(args.result_dir, strftime("%Y_%m_%d_%H.%M.%S"))
@@ -86,9 +86,9 @@ def main(args):
     
     result = animate_from_coeff.generate(data, save_dir, pic_path, crop_info, \
                                 enhancer=args.enhancer, background_enhancer=args.background_enhancer, preprocess=args.preprocess, img_size=args.size)
-    
-    shutil.move(result, save_dir+'.mp4')
-    print('The generated video is named:', save_dir+'.mp4')
+    finalFileName=save_dir+video_unique_name_str+'.mp4'
+    shutil.move(result, finalFileName)
+    print('The generated video is named:', finalFileName)
 
     if not args.verbose:
         shutil.rmtree(save_dir)
